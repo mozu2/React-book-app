@@ -1,9 +1,13 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form'
 
 const Login = () => {
 
+    const [success, setSuccess] = useState('');
+
     const onsubmit = (data) => {
-        console.log("送信されたデータ:", data);
+        console.log(data);
+        setSuccess('ログインに成功しました。');
     };
 
     const {
@@ -25,7 +29,7 @@ const Login = () => {
                 id='email'
                 type='email'
                 {...register('email', {
-                    required: '正しいメールを入力してください',
+                    required: 'メールアドレスを入力してください',
                     pattern: {
                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                         message: '有効なメールアドレスを設定して。'
@@ -34,6 +38,7 @@ const Login = () => {
             {errors.email && <p>{errors.email.message}</p>}
 
             <button type="submit">送信</button>
+            {success && <p>{success}</p>}
         </form >
     );
 };
