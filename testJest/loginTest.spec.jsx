@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import Login from '../src/Login';
 import '@testing-library/jest-dom';
 
@@ -27,7 +27,33 @@ test('要素が読み込まれているか。', () => {
 test('空の場合', async () => {
     const { submitbtn } = setUp();
     fireEvent.click(submitbtn);
-    await waitFor(() => {
-
+    await waitFor(() => { // waitForをする理由はDOM表示されるのを待ってから、getByTextをする必要があるからである。
+        expect(screen.getByText('メールアドレスを入力してください')).toBeInTheDocument();
+        expect(screen.getByText('パスワードを入力してください')).toBeInTheDocument();
     })
+});
+
+test('有効なメールアドレスでない場合', async () => {
+    const { emailElement, passwordElement, submitbtn } = setUp();
+
+    fireEvent.change(passwordElement, { target: { value: '123' } });
+    fireEvent.change(emailElement, { target: { value: 'aaa' } });
+
+    fireEvent.click(submitbtn);
+    await waitFor(() => {
+        expect(screen.getByText('有効なメールアドレスを設定して。')).toBeInTheDocument();
+    })
+});
+
+test('正しく動作する場合', async () => {
+    const { emailElement, passwordElement, submitbtn } = setUp();
+
+    fireEvent.change(passwordElement, { target: { value: '123' } });
+    fireEvent.change(emailElement, { target: { value: 'test@gmail.com' } });
+    fireEvent.click(submitbtn);
+
+    await waitFor(() => {
+        expect(screen.getByText('ログインに成功しました。')).toBeInTheDocument();
+    })
+
 })
