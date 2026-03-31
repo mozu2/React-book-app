@@ -5,7 +5,7 @@ import '@testing-library/jest-dom';
 
 
 const setUp = () => {
-    render(<Login />);
+    render(<Login />);                                              //ここでまず必要な要素をまとめて作成している。
     const passwordElement = screen.getByLabelText('パスワード');
     const emailElement = screen.getByLabelText('メールアドレス');
     const submitbtn = screen.getByRole('button', { name: '送信' });
@@ -13,9 +13,9 @@ const setUp = () => {
 };
 
 test('要素が読み込まれているか。', () => {
-    const { passwordElement, emailElement, submitbtn } = setUp();
+    const { passwordElement, emailElement, submitbtn } = setUp();       //ここでsetUPで作成した、要素を取得さしている。
 
-    expect(emailElement).toBeInTheDocument();
+    expect(emailElement).toBeInTheDocument();               //これらは要素が存在するのかを確認している。
     expect(emailElement).toHaveValue('');
     expect(passwordElement).toBeInTheDocument();
     expect(passwordElement).toHaveValue('');
@@ -56,4 +56,4 @@ test('正しく動作する場合', async () => {
         expect(screen.getByText('ログインに成功しました。')).toBeInTheDocument();
     })
 
-})
+});
