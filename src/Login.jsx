@@ -8,18 +8,22 @@ const Login = () => {
 
 
     const onsubmit = async (data) => {
+
         const response = await fetch('https://railway.bookreview.techtrain.dev/signin', {
             method: 'POST',
             headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                'Authorization': 'Basic ' + btoa('password:email')
             },
             body: JSON.stringify(data)
+
         });
 
         if (response.ok) {
             alert('ログインが完了しました。');
+        } else {
+            alert('ログインに失敗しました。');
         }
-
 
     };
 
