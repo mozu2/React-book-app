@@ -26,10 +26,11 @@ const Signup = () => {
         });
 
 
-
+        //APIが２００を返さないときに発動する
         if (!response.ok) {
             const errorInfo = await response.json();
 
+            //APIのresponse: の部分に書かれているエラーから決める。
             if (response.status === 409) {
                 setError('email',
                     {
@@ -49,24 +50,30 @@ const Signup = () => {
                 <label htmlFor="">名前：</label>
                 <input type="text" id='name'
                     {...register('name', {
-                        required: '名前を入力してください。'
+                        required: '名前を入力してください。',
+                        string: 'str型にしてください'
                     })} />{errors.name && <span>{errors.name.message}</span>}
                 <label htmlFor="password">パスワード：</label>
                 <input id="password" type="password"
                     {
                     ...register('password', {
                         required: 'パスワードを入力してください',
+                        string: 'str型にしてください'
                     })
                     } />{errors.password && <span>{errors.password.message}</span>}
                 <label htmlFor="">メールアドレス：</label>
                 <input type="email" {...register("email", {
-                    required: 'メールアドレスを入力してください。'
+                    required: 'メールアドレスを入力してください。',
+                    string: 'str型にしてください'
                 })} />{errors.email && <span>{errors.email.message}</span>}
                 <button type='submit'>送信</button>
             </form>
+
+
         </>
     );
 
 };
 
 export default Signup;
+
