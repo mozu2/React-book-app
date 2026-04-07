@@ -13,7 +13,7 @@ const Login = () => {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
-                'Authorization': 'Basic ' + btoa('password:email')
+                'Authorization': 'Basic ' + btoa(`${data.email}:${data.password}`) //あってもなくても挙動変わらない
             },
             body: JSON.stringify(data)
 

@@ -1,10 +1,23 @@
 
-import { useForm } from 'react-hook-form'
-
+import { useForm } from 'react-hook-form';
+import Compressor from 'compressorjs';
 
 const Signup = () => {
 
 
+    const compressImage = (file) => {
+        return new Promise((resolve, reject) => {
+            new Compressor(file, {
+                quality: 0.8,
+                success(result) {
+                    resolve(result);
+                },
+                error(err) {
+                    reject(err);
+                },
+            });
+        });
+    };
 
 
     const {
@@ -14,15 +27,36 @@ const Signup = () => {
         formState: { errors }
     } = useForm();
 
+
+
+
     const submit = async (data) => {
 
+        const file = data.icon[0];
 
+        const compressedFile = await compressImage(file);
+
+        //メールアドレスとパスワードを送る
         const response = await fetch('https://railway.bookreview.techtrain.dev/users', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify(data)
+        });
+        const result = await response.json();
+        const token = result.token;
+
+
+        const formDate = new FormData();
+        FormData.append('icon', compressedFile)
+
+        const iconResponse = await fetch('https://railway.bookreview.techtrain.dev/uploads', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            body: formData
         });
 
 
@@ -67,8 +101,17 @@ const Signup = () => {
                     string: 'str型にしてください'
                 })} />{errors.email && <span>{errors.email.message}</span>}
                 <button type='submit'>送信</button>
-            </form>
 
+                <label >アイコン</label>
+                <input type="file"{...register('icon', {
+                    validate: {
+                        isPngOrJpeg: (files) => ["image/png", "image/jpeg"].includes(files[0]?.type) || "jpegかpngにしてください。",
+                        maxSize: (files) => files[0].size <= 1024 * 1024 || "1MB以下のファイルを選択してください。"
+
+                    }
+                })} /> {errors.icon?.message && (<small>{errors.icon.message}</small>)}
+
+            </form>
 
         </>
     );
