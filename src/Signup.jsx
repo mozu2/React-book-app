@@ -48,7 +48,7 @@ const Signup = () => {
         });
         const result = await response.json();
         const token = result.token;
-
+        localStorage.setItem('token', token);
 
         const formData = new FormData();
         formData.append('icon', compressedFile)
