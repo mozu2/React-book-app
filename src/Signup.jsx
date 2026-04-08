@@ -33,9 +33,11 @@ const Signup = () => {
     const submit = async (data) => {
 
         const file = data.icon[0];
+        console.log('圧縮前', file.size);
+
 
         const compressedFile = await compressImage(file);
-
+        console.log('圧縮後', compressedFile.size);
         //メールアドレスとパスワードを送る
         const response = await fetch('https://railway.bookreview.techtrain.dev/users', {
             method: 'POST',
@@ -48,8 +50,8 @@ const Signup = () => {
         const token = result.token;
 
 
-        const formDate = new FormData();
-        FormData.append('icon', compressedFile)
+        const formData = new FormData();
+        formData.append('icon', compressedFile)
 
         const iconResponse = await fetch('https://railway.bookreview.techtrain.dev/uploads', {
             method: 'POST',
