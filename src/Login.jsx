@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form'
 import Signup from './Signup';
+import { useNavigate } from 'react-router-dom';
+
 
 
 
 const Login = () => {
 
+    const navigate = useNavigate();
 
     const onsubmit = async (data) => {
 
@@ -19,8 +22,13 @@ const Login = () => {
 
         });
 
+        const result = await response.json();
+        const token = result.token;
+        localStorage.setItem('token', token);
+
         if (response.ok) {
             alert('ログインが完了しました。');
+            navigate('/books');
         } else {
             alert('ログインに失敗しました。');
         }
