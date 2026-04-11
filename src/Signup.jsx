@@ -81,38 +81,41 @@ const Signup = () => {
 
     return (
         <>
+
             <form onSubmit={handleSubmit(submit)}>
-                <h1>新規登録作成</h1>
-                <label htmlFor="">名前：</label>
-                <input type="text" id='name'
-                    {...register('name', {
-                        required: '名前を入力してください。',
+                <h1 className='text-2xl text-center mt-6 '>新規登録作成</h1>
+                <div className='text-xl flex flex-col items-center justify-center h-screen '>
+                    <label htmlFor="">名前</label>
+                    <input type="text" id='name' className='bg-gray-200 mb-5'
+                        {...register('name', {
+                            required: '名前を入力してください。',
+                            string: 'str型にしてください'
+                        })} />{errors.name && <span>{errors.name.message}</span>}
+                    <label htmlFor="password">パスワード</label>
+                    <input id="password" type="password" className='bg-gray-200 mb-5'
+                        {
+                        ...register('password', {
+                            required: 'パスワードを入力してください',
+                            string: 'str型にしてください'
+                        })
+                        } />{errors.password && <span>{errors.password.message}</span>}
+                    <label htmlFor="">メールアドレス</label>
+                    <input type="email" className='bg-gray-200 mb-5' {...register("email", {
+                        required: 'メールアドレスを入力してください。',
                         string: 'str型にしてください'
-                    })} />{errors.name && <span>{errors.name.message}</span>}
-                <label htmlFor="password">パスワード：</label>
-                <input id="password" type="password"
-                    {
-                    ...register('password', {
-                        required: 'パスワードを入力してください',
-                        string: 'str型にしてください'
-                    })
-                    } />{errors.password && <span>{errors.password.message}</span>}
-                <label htmlFor="">メールアドレス：</label>
-                <input type="email" {...register("email", {
-                    required: 'メールアドレスを入力してください。',
-                    string: 'str型にしてください'
-                })} />{errors.email && <span>{errors.email.message}</span>}
-                <button type='submit'>送信</button>
+                    })} />{errors.email && <span>{errors.email.message}</span>}
+                    <button type='submit' className='px-5 py-3 rounded-md mx-auto block mb-5 bg-green-200 hover:bg-green-400 transition duration-200'>送信</button>
 
-                <label >アイコン</label>
-                <input type="file"{...register('icon', {
-                    validate: {
-                        isPngOrJpeg: (files) => ["image/png", "image/jpeg"].includes(files[0]?.type) || "jpegかpngにしてください。",
-                        maxSize: (files) => files[0].size <= 1024 * 1024 || "1MB以下のファイルを選択してください。"
+                    <label >アイコン</label>
+                    <input className='text-blue-500 hover:text-blue-900 transition duration-200' type="file"{...register('icon', {
+                        validate: {
+                            isPngOrJpeg: (files) => ["image/png", "image/jpeg"].includes(files[0]?.type) || "jpegかpngにしてください。",
+                            maxSize: (files) => files[0].size <= 1024 * 1024 || "1MB以下のファイルを選択してください。"
 
-                    }
-                })} /> {errors.icon?.message && (<small>{errors.icon.message}</small>)}
+                        }
+                    })} /> {errors.icon?.message && (<small>{errors.icon.message}</small>)}
 
+                </div >
             </form>
 
         </>

@@ -42,33 +42,39 @@ const Login = () => {
     } = useForm();
     return (
         <>
-            <form onSubmit={handleSubmit(onsubmit)} noValidate>
-                <label htmlFor="password">パスワード</label>
-                <input id='password'
-                    type="password"  {...register('password', {
-                        required: 'パスワードを入力してください',
+            <div className='text-xl flex flex-col items-center justify-center h-screen '>
+                <form onSubmit={handleSubmit(onsubmit)} noValidate>
+                    <div className='flex flex-col'>
 
-                    })} />
-                {errors.password && <p>{errors.password.message}</p>}
-                <label htmlFor="email">メールアドレス</label>
-                <input
-                    id='email'
-                    type='email'
-                    {...register('email', {
-                        required: 'メールアドレスを入力してください',
-                        pattern: {
-                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                            message: '有効なメールアドレスを設定して。'
-                        }
-                    })} />
-                {errors.email && <p>{errors.email.message}</p>}
+                        <label htmlFor="password">パスワード</label>
+                        <input id='password' className='bg-gray-200 mb-5'
+                            type="password"  {...register('password', {
+                                required: 'パスワードを入力してください',
 
-                <button type="submit">送信</button>
+                            })} />
+                        {errors.password && <p>{errors.password.message}</p>}
+                    </div>
+                    <div className='flex flex-col'>
 
-            </form >
+                        <label htmlFor="email">メールアドレス</label>
+                        <input
+                            id='email'
+                            type='email'
+                            className='bg-gray-200 mb-5'
+                            {...register('email', {
+                                required: 'メールアドレスを入力してください',
+                                pattern: {
+                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                    message: '有効なメールアドレスを設定して。'
+                                }
+                            })} />
+                        {errors.email && <p>{errors.email.message}</p>}
 
-            <a href='/signup'>登録はこちらから</a>
-
+                    </div>
+                    <button type="submit" className='px-5 py-3 rounded-md mx-auto block mb-5 bg-green-200 hover:bg-green-400 transition duration-200'>送信</button>
+                </form >
+                <a href='/signup' className='text-blue-500 hover:text-blue-900 transition duration-200'>登録はこちらから</a>
+            </div>
         </>
     );
 };

@@ -7,6 +7,7 @@ import './App.css';
 import Login from './Login';
 import Signup from './Signup';
 import BookList from './BookList';
+import Home from './Home';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/books' element={<BookList />} />
+        <Route path='/' element={<Home />} />
       </Routes>
     </BrowserRouter>
   )
