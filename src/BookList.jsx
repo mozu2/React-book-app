@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
+import BookItem from './BookItem';
+import Pagenation from './Pagenation';
+import { useSelector } from 'react-redux';
 
 
 const BookList = () => {
     const [books, setBooks] = useState([]);
-
+    const offset = useSelector((state) => state.page.offset);
     useEffect(() => {
-
+        console.log('offset変わった', offset);
         const token = localStorage.getItem('token');
-        console.log('トークン', token);
 
-        fetch('https://railway.bookreview.techtrain.dev/books?offset=0', {
+
+        fetch(`https://railway.bookreview.techtrain.dev/books?offset=${offset}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -20,7 +23,7 @@ const BookList = () => {
                 console.log('書籍データ', data);
                 setBooks(data);
             });
-    }, []);
+    }, [offset]);
 
     return (
         <div className='bg-lime-400' >
@@ -28,14 +31,10 @@ const BookList = () => {
                 <h1 className='text-5xl font-bold mb-6'>書籍一覧</h1>
                 <div className='grid grid-cols-1 gap-4'>
                     {books.map((book) => (
-                        <div key={book.id} className='bg-white shadow rounded-lg p-6'>
-                            <h2 className='text-xl text-black font-bold'>{book.title}</h2>
-                            <a href={book.url} className='text-blue-500 mt-2 hover:text-blue-900 transition duration-200'>{book.url}</a>
-                            <p className='text-gray-700 mt-2'>{book.detail}</p>
-                            <p className='text-gray-400 mt-2'>{book.review}</p>
-                        </div>
+                        <BookItem key={book.id} book={book} />
                     ))}
                 </div>
+                <Pagenation />
             </div>
         </div>
     )
