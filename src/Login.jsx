@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form'
 import Signup from './Signup';
 import { useNavigate } from 'react-router-dom';
-
 
 
 
@@ -10,6 +9,12 @@ const Login = () => {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const token = localStorage.getItem('token'); //こっちは以前に保存したtokenを取り出す
+        if (token) {
+            navigate('/books');
+        }
+    }, []);
     const onsubmit = async (data) => {
 
         const response = await fetch('https://railway.bookreview.techtrain.dev/signin', {
@@ -23,11 +28,13 @@ const Login = () => {
         });
 
         const result = await response.json();
-        const token = result.token;
-        localStorage.setItem('token', token);
+        const token = result.token; //こっちは新しくtokenを受け取る
+
+
 
         if (response.ok) {
             alert('ログインが完了しました。');
+            localStorage.setItem('token', token);
             navigate('/books');
         } else {
             alert('ログインに失敗しました。');

@@ -1,9 +1,13 @@
 
 import { useForm } from 'react-hook-form';
 import Compressor from 'compressorjs';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 const Signup = () => {
 
+    const navigate = useNavigate();
 
     const compressImage = (file) => {
         return new Promise((resolve, reject) => {
@@ -19,6 +23,12 @@ const Signup = () => {
         });
     };
 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            navigate('/books');
+        }
+    })
 
     const {
         setError,
