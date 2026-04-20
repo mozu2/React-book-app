@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 
@@ -29,8 +29,10 @@ const Header = () => {
         <>
             <header>
                 <div>
-                    {token ? (
+                    {token ? (<>
                         <span className=" text-2xl">{userName}</span>
+                        <Link to="/profile">名前の変更</Link>
+                    </>
                     ) : (
                         <div className="flex flex-col items-center gap-2">
                             <p>現在ログインできていない状態です</p>

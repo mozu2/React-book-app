@@ -3,11 +3,14 @@ import BookItem from './BookItem';
 import Pagenation from './Pagenation';
 import { useSelector } from 'react-redux';
 import Header from './Header';
+import { useNavigate } from 'react-router-dom';
 
 
 const BookList = () => {
     const [books, setBooks] = useState([]);
     const offset = useSelector((state) => state.page.offset);
+    const navigate = useNavigate();
+
     useEffect(() => {
 
         const token = localStorage.getItem('token');
@@ -19,8 +22,17 @@ const BookList = () => {
                 'Authorization': `Bearer ${token}`
             }
         })
-            .then((response) => response.json())
+            //ここでtokenの期限が切れたときにtokenを捨てて、/loginに移動させる。
+            .then((response) => {
+                if (response.status === 401) {
+                    localStorage.removeItem('token');
+                    navigate('/login');
+                    return;                     //このreturnで処理を終わらせている。
+                }
+                return response.json();
+            })
             .then((data) => {
+                if (!data) return;              //データがないなら処理終わる
                 console.log('書籍データ', data);
                 setBooks(data);
             });
