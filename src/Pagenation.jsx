@@ -20,7 +20,6 @@ const Pagenation = () => {
                 <button
                     className=" rounded-md px-3 py-3 mx-3 my-3 bg-white"
                     onClick={() => dispatch(nextPage())}
-
                 >
                     次に
                 </button>
