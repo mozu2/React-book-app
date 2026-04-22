@@ -9,6 +9,7 @@ import Signup from './Signup';
 import BookList from './BookList';
 import Home from './Home';
 import UserEdit from './UserEdit';
+import Logout from './Logout';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path='/books' element={<BookList />} />
         <Route path='/' element={<Home />} />
         <Route path='/profile' element={<UserEdit />} />
+        <Route path='/logout' element={<Logout />} />
       </Routes>
     </BrowserRouter>
   )

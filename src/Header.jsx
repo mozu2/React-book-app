@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Logout from "./Logout";
 
 
 
@@ -33,6 +34,7 @@ const Header = () => {
                         <div className="flex justify-between">
                             <span className=" text-2xl">{userName}</span>
                             <Link to="/profile" className="bg-blue-400 mb-2 px-2 py-2">名前の変更</Link>
+                            <Logout />
                         </div>
                     ) : (
                         <div className="flex flex-col items-center gap-2">
