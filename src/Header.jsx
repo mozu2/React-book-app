@@ -34,6 +34,7 @@ const Header = () => {
                         <div className="flex justify-between">
                             <span className=" text-2xl">{userName}</span>
                             <Link to="/profile" className="bg-blue-400 mb-2 px-2 py-2">名前の変更</Link>
+                            <Link to="/newreview" className="bg-purple-400 mb-2 py-2 px-2" >新規投稿</Link>
                             <Logout />
                         </div>
                     ) : (
