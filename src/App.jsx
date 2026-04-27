@@ -12,6 +12,7 @@ import UserEdit from './UserEdit';
 import Logout from './Logout';
 import NewReview from './NewReview';
 import Detail from './Detail';
+import EditReview from './EditReview';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path='/logout' element={<Logout />} />
         <Route path='/newreview' element={<NewReview />} />
         <Route path='/detail/:id' element={<Detail />} />
+        <Route path='/edit/:id' element={<EditReview />} />
       </Routes>
     </BrowserRouter>
   )
